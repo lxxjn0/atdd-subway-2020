@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import wooteco.subway.maps.line.domain.Line;
-import wooteco.subway.maps.map.domain.DistanceFare;
+import wooteco.subway.maps.map.domain.DistanceFarePolicy;
 import wooteco.subway.maps.map.domain.SubwayPath;
 import wooteco.subway.maps.station.domain.Station;
 import wooteco.subway.maps.station.dto.StationResponse;
@@ -26,8 +26,8 @@ public class PathResponseAssembler {
     }
 
     private static double calculateFare(int distance, List<Line> lines) {
-        DistanceFare distanceFare = DistanceFare.valueOf(distance);
-        double extraDistanceFare = distanceFare.calculateOverFare(distance);
+        DistanceFarePolicy distanceFarePolicy = DistanceFarePolicy.valueOf(distance);
+        double extraDistanceFare = distanceFarePolicy.calculateOverFare(distance);
 
         double extraLineFare = lines.stream()
                 .mapToDouble(line -> line.getExtraFare().getFare())

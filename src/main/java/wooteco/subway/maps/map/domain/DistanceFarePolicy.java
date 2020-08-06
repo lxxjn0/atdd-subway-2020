@@ -4,26 +4,26 @@ import java.util.Arrays;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-public enum DistanceFare {
-    DEFAULT((distance) -> distance <= 10, DistanceFare::defaultCalculateOverFare),
+public enum DistanceFarePolicy {
+    DEFAULT((distance) -> distance <= 10, DistanceFarePolicy::defaultCalculateOverFare),
     OVER_TEN_UNDER_FIFTY((distance) -> distance > 10 && distance <= 50,
-            DistanceFare::overTenUnderFiftyCalculateOverFare),
-    OVER_FIFTY((distance) -> distance > 50, DistanceFare::overFiftyCalculateOverFare);
+            DistanceFarePolicy::overTenUnderFiftyCalculateOverFare),
+    OVER_FIFTY((distance) -> distance > 50, DistanceFarePolicy::overFiftyCalculateOverFare);
 
     private static final long DEFAULT_DISTANCE_FARE = 1_250L;
 
     private final Predicate<Integer> decideDistanceRange;
     private final Function<Integer, Double> calculateOverFare;
 
-    DistanceFare(Predicate<Integer> decideDistanceRange,
+    DistanceFarePolicy(Predicate<Integer> decideDistanceRange,
             Function<Integer, Double> calculateOverFare) {
         this.decideDistanceRange = decideDistanceRange;
         this.calculateOverFare = calculateOverFare;
     }
 
-    public static DistanceFare valueOf(int distance) {
+    public static DistanceFarePolicy valueOf(int distance) {
         return Arrays.stream(values())
-                .filter(distanceFare -> distanceFare.decideDistanceRange.test(distance))
+                .filter(distanceFarePolicy -> distanceFarePolicy.decideDistanceRange.test(distance))
                 .findAny()
                 .orElse(DEFAULT);
     }
