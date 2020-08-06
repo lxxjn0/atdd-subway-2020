@@ -3,6 +3,7 @@ package wooteco.subway.maps.map.documentation;
 import static io.restassured.module.mockmvc.RestAssuredMockMvc.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
+import static org.springframework.restdocs.headers.HeaderDocumentation.*;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.request.RequestDocumentation.*;
@@ -20,6 +21,7 @@ import org.springframework.http.MediaType;
 import org.springframework.restdocs.RestDocumentationContextProvider;
 import org.springframework.web.context.WebApplicationContext;
 
+import wooteco.security.core.TokenResponse;
 import wooteco.subway.common.documentation.Documentation;
 import wooteco.subway.maps.line.dto.LineResponse;
 import wooteco.subway.maps.line.dto.LineStationResponse;
@@ -36,10 +38,13 @@ public class PathDocumentation extends Documentation {
     @MockBean
     private MapService mapService;
 
+    protected TokenResponse tokenResponse;
+
     @BeforeEach
     public void setUp(WebApplicationContext context,
             RestDocumentationContextProvider restDocumentation) {
         super.setUp(context, restDocumentation);
+        tokenResponse = new TokenResponse("token");
     }
 
     @Test
@@ -49,9 +54,10 @@ public class PathDocumentation extends Documentation {
                         new StationResponse(3L, "강남역", LocalDateTime.now(), LocalDateTime.now()),
                         new StationResponse(4L, "역삼역", LocalDateTime.now(), LocalDateTime.now())),
                 4, 3, 1_250);
-        when(mapService.findPath(any(), any(), any())).thenReturn(pathResponse);
+        when(mapService.findPath(any(), any(), any(), any())).thenReturn(pathResponse);
 
         given().log().all().
+                header("Authorization", "Bearer " + tokenResponse.getAccessToken()).
                 param("source", 1L).
                 param("target", 3L).
                 param("type", "DISTANCE").
@@ -63,6 +69,9 @@ public class PathDocumentation extends Documentation {
                 apply(document("paths/find",
                         getDocumentRequest(),
                         getDocumentResponse(),
+                        requestHeaders(
+                                headerWithName("Authorization").description(
+                                        "Bearer auth credentials")),
                         requestParameters(
                                 parameterWithName("source").description("출발역 아이디"),
                                 parameterWithName("target").description("도착역 아이디"),

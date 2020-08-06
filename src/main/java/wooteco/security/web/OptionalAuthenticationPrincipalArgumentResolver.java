@@ -13,6 +13,7 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 import wooteco.security.core.Authentication;
 import wooteco.security.core.OptionalAuthenticationPrincipal;
 import wooteco.security.core.context.SecurityContextHolder;
+import wooteco.subway.members.member.domain.LoginMember;
 
 public class OptionalAuthenticationPrincipalArgumentResolver implements
         HandlerMethodArgumentResolver {
@@ -41,12 +42,12 @@ public class OptionalAuthenticationPrincipalArgumentResolver implements
         try {
             Map<String, String> principal = (Map)authentication.getPrincipal();
 
-            Object[] params = Arrays.stream(parameter.getParameterType().getDeclaredFields())
+            Object[] params = Arrays.stream(LoginMember.class.getDeclaredFields())
                     .map(it -> toObject(it.getType(), principal.get(it.getName())))
                     .toArray();
 
             return Optional.of(
-                    parameter.getParameterType().getConstructors()[0].newInstance(params));
+                    LoginMember.class.getConstructors()[0].newInstance(params));
         } catch (Exception e) {
             throw new AuthorizationException();
         }
