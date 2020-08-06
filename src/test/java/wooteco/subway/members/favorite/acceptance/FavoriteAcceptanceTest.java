@@ -1,21 +1,21 @@
 package wooteco.subway.members.favorite.acceptance;
 
-import io.restassured.response.ExtractableResponse;
-import io.restassured.response.Response;
+import static wooteco.subway.maps.line.acceptance.step.LineStationAcceptanceStep.*;
+import static wooteco.subway.members.favorite.acceptance.step.FavoriteAcceptanceStep.*;
+import static wooteco.subway.members.member.acceptance.step.MemberAcceptanceStep.*;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import wooteco.subway.common.acceptance.AcceptanceTest;
+
+import io.restassured.response.ExtractableResponse;
+import io.restassured.response.Response;
 import wooteco.security.core.TokenResponse;
+import wooteco.subway.common.acceptance.AcceptanceTest;
 import wooteco.subway.maps.line.acceptance.step.LineAcceptanceStep;
 import wooteco.subway.maps.line.dto.LineResponse;
 import wooteco.subway.maps.station.acceptance.step.StationAcceptanceStep;
 import wooteco.subway.maps.station.dto.StationResponse;
-
-import static wooteco.subway.maps.line.acceptance.step.LineStationAcceptanceStep.지하철_노선에_지하철역_등록되어_있음;
-import static wooteco.subway.members.favorite.acceptance.step.FavoriteAcceptanceStep.*;
-import static wooteco.subway.members.member.acceptance.step.MemberAcceptanceStep.로그인_되어_있음;
-import static wooteco.subway.members.member.acceptance.step.MemberAcceptanceStep.회원_등록되어_있음;
 
 @DisplayName("즐겨찾기 관련 기능")
 public class FavoriteAcceptanceTest extends AcceptanceTest {
@@ -48,9 +48,9 @@ public class FavoriteAcceptanceTest extends AcceptanceTest {
         양재역 = 지하철역_등록되어_있음("양재역");
         남부터미널역 = 지하철역_등록되어_있음("남부터미널역");
 
-        이호선 = 지하철_노선_등록되어_있음("2호선", "GREEN");
-        신분당선 = 지하철_노선_등록되어_있음("신분당선", "RED");
-        삼호선 = 지하철_노선_등록되어_있음("3호선", "ORANGE");
+        이호선 = 지하철_노선_등록되어_있음("2호선", "GREEN", "400");
+        신분당선 = 지하철_노선_등록되어_있음("신분당선", "RED", "0");
+        삼호선 = 지하철_노선_등록되어_있음("3호선", "ORANGE", "800");
 
         지하철_노선에_지하철역_등록되어_있음(이호선, null, 교대역, 0, 0);
         지하철_노선에_지하철역_등록되어_있음(이호선, 교대역, 강남역, 2, 2);
@@ -85,13 +85,15 @@ public class FavoriteAcceptanceTest extends AcceptanceTest {
         즐겨찾기_삭제됨(deleteResponse);
     }
 
-    private Long 지하철_노선_등록되어_있음(String name, String color) {
-        ExtractableResponse<Response> createLineResponse1 = LineAcceptanceStep.지하철_노선_등록되어_있음(name, color);
+    private Long 지하철_노선_등록되어_있음(String name, String color, String fare) {
+        ExtractableResponse<Response> createLineResponse1 = LineAcceptanceStep.지하철_노선_등록되어_있음(name,
+                color, fare);
         return createLineResponse1.as(LineResponse.class).getId();
     }
 
     private Long 지하철역_등록되어_있음(String name) {
-        ExtractableResponse<Response> createdStationResponse1 = StationAcceptanceStep.지하철역_등록되어_있음(name);
+        ExtractableResponse<Response> createdStationResponse1 = StationAcceptanceStep.지하철역_등록되어_있음(
+                name);
         return createdStationResponse1.as(StationResponse.class).getId();
     }
 }

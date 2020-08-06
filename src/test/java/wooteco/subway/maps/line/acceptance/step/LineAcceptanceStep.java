@@ -18,10 +18,6 @@ import io.restassured.response.Response;
 import wooteco.subway.maps.line.dto.LineResponse;
 
 public class LineAcceptanceStep {
-    public static ExtractableResponse<Response> 지하철_노선_등록되어_있음(String name, String color) {
-        return 지하철_노선_생성_요청(name, color);
-    }
-
     public static ExtractableResponse<Response> 지하철_노선_등록되어_있음(String name, String color,
             String fare) {
         return 지하철_노선_생성_요청(name, color, fare);
@@ -34,6 +30,7 @@ public class LineAcceptanceStep {
         params.put("startTime", LocalTime.of(05, 30).format(DateTimeFormatter.ISO_TIME));
         params.put("endTime", LocalTime.of(23, 30).format(DateTimeFormatter.ISO_TIME));
         params.put("intervalTime", "5");
+        params.put("extraFare", "400");
 
         return RestAssured.given().log().all().
                 contentType(MediaType.APPLICATION_JSON_VALUE).
@@ -108,6 +105,7 @@ public class LineAcceptanceStep {
         params.put("startTime", LocalTime.of(05, 30).format(DateTimeFormatter.ISO_TIME));
         params.put("endTime", LocalTime.of(23, 30).format(DateTimeFormatter.ISO_TIME));
         params.put("intervalTime", "5");
+        params.put("extraFare", "400");
 
         return RestAssured.given().log().all().
                 contentType(MediaType.APPLICATION_JSON_VALUE).

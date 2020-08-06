@@ -1,13 +1,14 @@
 package wooteco.subway.maps.line.acceptance;
 
+import java.util.Arrays;
+
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
 import wooteco.subway.common.acceptance.AcceptanceTest;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import wooteco.subway.maps.line.acceptance.step.LineAcceptanceStep;
-
-import java.util.Arrays;
 
 @DisplayName("지하철 노선 관련 기능")
 public class LineAcceptanceTest extends AcceptanceTest {
@@ -25,7 +26,7 @@ public class LineAcceptanceTest extends AcceptanceTest {
     @Test
     void createLine2() {
         // given
-        LineAcceptanceStep.지하철_노선_등록되어_있음("신분당선", "bg-red-600");
+        LineAcceptanceStep.지하철_노선_등록되어_있음("신분당선", "bg-red-600", "400");
 
         // when
         ExtractableResponse<Response> response = LineAcceptanceStep.지하철_노선_생성_요청("신분당선", "RED");
@@ -38,8 +39,10 @@ public class LineAcceptanceTest extends AcceptanceTest {
     @Test
     void getLines() {
         // given
-        ExtractableResponse<Response> createResponse1 = LineAcceptanceStep.지하철_노선_등록되어_있음("신분당선", "RED");
-        ExtractableResponse<Response> createResponse2 = LineAcceptanceStep.지하철_노선_등록되어_있음("2호선", "GREEN");
+        ExtractableResponse<Response> createResponse1 = LineAcceptanceStep.지하철_노선_등록되어_있음("신분당선",
+                "RED", "400");
+        ExtractableResponse<Response> createResponse2 = LineAcceptanceStep.지하철_노선_등록되어_있음("2호선",
+                "GREEN", "400");
 
         // when
         ExtractableResponse<Response> response = LineAcceptanceStep.지하철_노선_목록_조회_요청();
@@ -53,7 +56,8 @@ public class LineAcceptanceTest extends AcceptanceTest {
     @Test
     void getLine() {
         // given
-        ExtractableResponse<Response> createResponse = LineAcceptanceStep.지하철_노선_등록되어_있음("신분당선", "RED");
+        ExtractableResponse<Response> createResponse = LineAcceptanceStep.지하철_노선_등록되어_있음("신분당선",
+                "RED", "400");
 
         // when
         ExtractableResponse<Response> response = LineAcceptanceStep.지하철_노선_조회_요청(createResponse);
@@ -67,10 +71,12 @@ public class LineAcceptanceTest extends AcceptanceTest {
     void updateLine() {
         // given
         String name = "신분당선";
-        ExtractableResponse<Response> createResponse = LineAcceptanceStep.지하철_노선_등록되어_있음(name, "RED");
+        ExtractableResponse<Response> createResponse = LineAcceptanceStep.지하철_노선_등록되어_있음(name,
+                "RED", "400");
 
         // when
-        ExtractableResponse<Response> response = LineAcceptanceStep.지하철_노선_수정_요청(createResponse, "구분당선", "BLUE");
+        ExtractableResponse<Response> response = LineAcceptanceStep.지하철_노선_수정_요청(createResponse,
+                "구분당선", "BLUE");
 
         // then
         LineAcceptanceStep.지하철_노선_수정됨(response);
@@ -80,7 +86,8 @@ public class LineAcceptanceTest extends AcceptanceTest {
     @Test
     void deleteLine() {
         // given
-        ExtractableResponse<Response> createResponse = LineAcceptanceStep.지하철_노선_등록되어_있음("신분당선", "RED");
+        ExtractableResponse<Response> createResponse = LineAcceptanceStep.지하철_노선_등록되어_있음("신분당선",
+                "RED", "400");
 
         // when
         ExtractableResponse<Response> response = LineAcceptanceStep.지하철_노선_제거_요청(createResponse);
