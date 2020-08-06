@@ -14,7 +14,7 @@ public class LineResponse {
     private LocalTime startTime;
     private LocalTime endTime;
     private int intervalTime;
-    private long extraFare;
+    private double extraFare;
     private List<LineStationResponse> stations;
     private LocalDateTime createdDate;
     private LocalDateTime modifiedDate;
@@ -23,7 +23,7 @@ public class LineResponse {
     }
 
     public LineResponse(Long id, String name, String color, LocalTime startTime, LocalTime endTime,
-            int intervalTime, long extraFare, List<LineStationResponse> stations,
+            int intervalTime, double extraFare, List<LineStationResponse> stations,
             LocalDateTime createdDate, LocalDateTime modifiedDate) {
         this.id = id;
         this.name = name;
@@ -87,7 +87,7 @@ public class LineResponse {
         return intervalTime;
     }
 
-    public long getExtraFare() {
+    public double getExtraFare() {
         return extraFare;
     }
 

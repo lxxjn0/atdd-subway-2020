@@ -7,16 +7,18 @@ import javax.persistence.Embeddable;
 @Access(AccessType.FIELD)
 @Embeddable
 public class Fare {
-    private long fare;
+    public static double DEFAULT_LINE_FARE = 0;
+
+    private double fare;
 
     protected Fare() {
     }
 
-    public Fare(int fare) {
+    public Fare(double fare) {
         this.fare = fare;
     }
 
-    public long getFare() {
+    public double getFare() {
         return fare;
     }
 }
