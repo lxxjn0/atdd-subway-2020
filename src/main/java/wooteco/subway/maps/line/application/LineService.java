@@ -1,19 +1,21 @@
 package wooteco.subway.maps.line.application;
 
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import wooteco.subway.maps.line.domain.Line;
 import wooteco.subway.maps.line.domain.LineRepository;
+import wooteco.subway.maps.line.domain.LineStation;
 import wooteco.subway.maps.line.dto.LineRequest;
 import wooteco.subway.maps.line.dto.LineResponse;
 import wooteco.subway.maps.line.dto.LineStationResponse;
 import wooteco.subway.maps.station.application.StationService;
 import wooteco.subway.maps.station.domain.Station;
 import wooteco.subway.maps.station.dto.StationResponse;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -51,26 +53,29 @@ public class LineService {
         List<Line> lines = findLines();
 
         return lines.stream()
-                .map(line -> LineResponse.of(line))
+                .map(LineResponse::of)
                 .collect(Collectors.toList());
     }
 
     public LineResponse findLineResponsesById(Long id) {
         Line line = lineRepository.findById(id).orElseThrow(RuntimeException::new);
         List<Long> stationIds = line.getStationInOrder().stream()
-                .map(it -> it.getStationId())
+                .map(LineStation::getStationId)
                 .collect(Collectors.toList());
 
         Map<Long, Station> stations = stationService.findStationsByIds(stationIds);
 
-        List<LineStationResponse> lineStationResponses = extractLineStationResponses(line, stations);
+        List<LineStationResponse> lineStationResponses = extractLineStationResponses(line,
+                stations);
 
         return LineResponse.of(line, lineStationResponses);
     }
 
-    private List<LineStationResponse> extractLineStationResponses(Line line, Map<Long, Station> stations) {
+    private List<LineStationResponse> extractLineStationResponses(Line line,
+            Map<Long, Station> stations) {
         return line.getStationInOrder().stream()
-                .map(it -> LineStationResponse.of(line.getId(), it, StationResponse.of(stations.get(it.getStationId()))))
+                .map(it -> LineStationResponse.of(line.getId(), it,
+                        StationResponse.of(stations.get(it.getStationId()))))
                 .collect(Collectors.toList());
     }
 }

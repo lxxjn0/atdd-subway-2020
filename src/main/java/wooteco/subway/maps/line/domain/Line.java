@@ -1,10 +1,16 @@
 package wooteco.subway.maps.line.domain;
 
-import wooteco.subway.common.domain.BaseEntity;
-
-import javax.persistence.*;
 import java.time.LocalTime;
 import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+import wooteco.subway.common.domain.BaseEntity;
 
 @Entity
 public class Line extends BaseEntity {
@@ -18,12 +24,25 @@ public class Line extends BaseEntity {
     private LocalTime endTime;
     private int intervalTime;
     @Embedded
+    private Fare extraFare;
+    @Embedded
     private LineStations lineStations = new LineStations();
 
     public Line() {
     }
 
-    public Line(String name, String color, LocalTime startTime, LocalTime endTime, int intervalTime) {
+    public Line(String name, String color, LocalTime startTime, LocalTime endTime, int intervalTime,
+            Fare extraFare) {
+        this.name = name;
+        this.color = color;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.intervalTime = intervalTime;
+        this.extraFare = extraFare;
+    }
+
+    public Line(String name, String color, LocalTime startTime, LocalTime endTime,
+            int intervalTime) {
         this.name = name;
         this.color = color;
         this.startTime = startTime;
@@ -33,10 +52,11 @@ public class Line extends BaseEntity {
 
     public void update(Line line) {
         this.name = line.getName();
+        this.color = line.getColor();
         this.startTime = line.getStartTime();
         this.endTime = line.getEndTime();
         this.intervalTime = line.getIntervalTime();
-        this.color = line.getColor();
+        this.extraFare = line.getExtraFare();
     }
 
     public void addLineStation(LineStation lineStation) {
@@ -77,5 +97,9 @@ public class Line extends BaseEntity {
 
     public LineStations getLineStations() {
         return lineStations;
+    }
+
+    public Fare getExtraFare() {
+        return extraFare;
     }
 }
