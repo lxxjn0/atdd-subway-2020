@@ -224,7 +224,7 @@ export default {
     ...mapActions([SEARCH_PATH, FETCH_STATIONS]),
     async onSearchResult() {
       try {
-        this.searchPath(this.path);
+        this.searchPath({ ...this.path }).then((data) => console.log(data));
       }
       catch (e) {
         this.showSnackbar(SNACKBAR_MESSAGES.COMMON.FAIL)
