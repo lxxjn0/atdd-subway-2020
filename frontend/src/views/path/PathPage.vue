@@ -9,31 +9,31 @@
           <div class="px-4 pb-6">
             <div class="d-flex width-100">
               <v-select
-                v-model="path.source"
-                class="pr-4 path-station-select"
-                :items="allStationsView"
-                label="출발역"
-                color="grey darken-1"
-                item-color="amber darken-3"
-                outlined
-                dense
+                  v-model="path.source"
+                  class="pr-4 path-station-select"
+                  :items="allStationsView"
+                  label="출발역"
+                  color="grey darken-1"
+                  item-color="amber darken-3"
+                  outlined
+                  dense
               ></v-select>
               <v-icon class="relative bottom-15">mdi-arrow-right-bold</v-icon>
               <v-select
-                v-model="path.target"
-                class="pl-4 path-station-select"
-                :items="allStationsView"
-                label="도착역"
-                color="grey darken-1"
-                item-color="amber darken-3"
-                outlined
-                dense
+                  v-model="path.target"
+                  class="pl-4 path-station-select"
+                  :items="allStationsView"
+                  label="도착역"
+                  color="grey darken-1"
+                  item-color="amber darken-3"
+                  outlined
+                  dense
               ></v-select>
             </div>
             <div class="d-flex mb-4">
               <v-btn @click="onSearchResult" color="amber" class="width-100" depressed>검색</v-btn>
             </div>
-            <v-divider v-if="pathResult" />
+            <v-divider v-if="pathResult"/>
             <div v-if="pathResult" class="d-flex justify-center mt-4">
               <v-card width="400" flat>
                 <v-tabs v-model="tab" background-color="transparent" color="amber" grow>
@@ -46,18 +46,18 @@
                     <v-simple-table>
                       <template v-slot:default>
                         <thead>
-                          <tr>
-                            <th>소요시간</th>
-                            <th>거리</th>
-                            <th>요금</th>
-                          </tr>
+                        <tr>
+                          <th>소요시간</th>
+                          <th>거리</th>
+                          <th>요금</th>
+                        </tr>
                         </thead>
                         <tbody>
-                          <tr>
-                            <td>{{ pathResult.duration }}분</td>
-                            <td>{{ pathResult.distance }}km</td>
-                            <td>{{ pathResult.fare }}원</td>
-                          </tr>
+                        <tr>
+                          <td>{{ pathResult.duration }}분</td>
+                          <td>{{ pathResult.distance }}km</td>
+                          <td>{{ pathResult.fare }}원</td>
+                        </tr>
                         </tbody>
                       </template>
                     </v-simple-table>
@@ -66,18 +66,18 @@
                     <v-simple-table>
                       <template v-slot:default>
                         <thead>
-                          <tr>
-                            <th>소요시간</th>
-                            <th>거리</th>
-                            <th>요금</th>
-                          </tr>
+                        <tr>
+                          <th>소요시간</th>
+                          <th>거리</th>
+                          <th>요금</th>
+                        </tr>
                         </thead>
                         <tbody>
-                          <tr>
-                            <td>{{ pathResult.duration }}분</td>
-                            <td>{{ pathResult.distance }}km</td>
-                            <td>{{ pathResult.fare }}원</td>
-                          </tr>
+                        <tr>
+                          <td>{{ pathResult.duration }}분</td>
+                          <td>{{ pathResult.distance }}km</td>
+                          <td>{{ pathResult.fare }}원</td>
+                        </tr>
                         </tbody>
                       </template>
                     </v-simple-table>
@@ -100,40 +100,40 @@
                             <v-row>
                               <v-col cols="4">
                                 <v-select
-                                        v-model="departureTimeView.dayTime"
-                                        :items="departureTimeSelectView.dayTime"
-                                        width="400"
-                                        color="grey darken-1"
-                                        item-color="amber darken-3"
-                                        :rules="rules.departureTime.dayTime"
-                                        outlined
-                                        dense
+                                    v-model="departureTimeView.dayTime"
+                                    :items="departureTimeSelectView.dayTime"
+                                    width="400"
+                                    color="grey darken-1"
+                                    item-color="amber darken-3"
+                                    :rules="rules.departureTime.dayTime"
+                                    outlined
+                                    dense
                                 ></v-select>
                               </v-col>
                               <v-col cols="4">
                                 <v-select
-                                        v-model="departureTimeView.hour"
-                                        :items="departureTimeSelectView.hour"
-                                        label="시"
-                                        width="400"
-                                        color="grey darken-1"
-                                        item-color="amber darken-3"
-                                        :rules="rules.departureTime.hour"
-                                        outlined
-                                        dense
+                                    v-model="departureTimeView.hour"
+                                    :items="departureTimeSelectView.hour"
+                                    label="시"
+                                    width="400"
+                                    color="grey darken-1"
+                                    item-color="amber darken-3"
+                                    :rules="rules.departureTime.hour"
+                                    outlined
+                                    dense
                                 ></v-select>
                               </v-col>
                               <v-col cols="4">
                                 <v-select
-                                        v-model="departureTimeView.minute"
-                                        :items="departureTimeSelectView.minute"
-                                        label="분"
-                                        width="400"
-                                        color="grey darken-1"
-                                        item-color="amber darken-3"
-                                        :rules="rules.departureTime.minute"
-                                        outlined
-                                        dense
+                                    v-model="departureTimeView.minute"
+                                    :items="departureTimeSelectView.minute"
+                                    label="분"
+                                    width="400"
+                                    color="grey darken-1"
+                                    item-color="amber darken-3"
+                                    :rules="rules.departureTime.minute"
+                                    outlined
+                                    dense
                                 ></v-select>
                               </v-col>
                             </v-row>
@@ -141,24 +141,26 @@
                         </div>
                       </template>
                       <template slot="action">
-                        <v-btn :disabled="!valid" @click.prevent="onUpdateSearchResult" color="amber">확인</v-btn>
+                        <v-btn :disabled="!valid" @click.prevent="onUpdateSearchResult"
+                               color="amber">확인
+                        </v-btn>
                       </template>
                     </Dialog>
                     <v-simple-table>
                       <template v-slot:default>
                         <thead>
-                          <tr>
-                            <th>소요시간</th>
-                            <th>거리</th>
-                            <th>요금</th>
-                          </tr>
+                        <tr>
+                          <th>소요시간</th>
+                          <th>거리</th>
+                          <th>요금</th>
+                        </tr>
                         </thead>
                         <tbody>
-                          <tr>
-                            <td>{{ pathResult.duration }}분</td>
-                            <td>{{ pathResult.distance }}km</td>
-                            <td>{{ pathResult.fare }}원</td>
-                          </tr>
+                        <tr>
+                          <td>{{ pathResult.duration }}분</td>
+                          <td>{{ pathResult.distance }}km</td>
+                          <td>{{ pathResult.fare }}원</td>
+                        </tr>
                         </tbody>
                       </template>
                     </v-simple-table>
@@ -166,22 +168,24 @@
                 </v-tabs-items>
               </v-card>
             </div>
-            <v-divider />
+            <v-divider/>
             <div v-if="pathResult" class="d-flex justify-center mt-4">
               <v-card width="400" flat>
                 <template v-for="(station, index) in pathResult.stations">
                   <span :key="station.id">
-                    <v-chip :key="index" class="ma-2" :color="index === 0 || index === pathResult.stations.length - 1 ? 'amber' : ''">
+                    <v-chip :key="index" class="ma-2"
+                            :color="index === 0 || index === pathResult.stations.length - 1 ? 'amber' : ''">
                       <v-avatar v-if="index === 0 || index === pathResult.stations.length - 1" left>
                         <v-icon>mdi-subway</v-icon>
                       </v-avatar>
                       {{ station.name }}
                     </v-chip>
-                    <v-icon v-if="index < pathResult.stations.length - 1">mdi-arrow-right-bold</v-icon>
+                    <v-icon
+                        v-if="index < pathResult.stations.length - 1">mdi-arrow-right-bold</v-icon>
                   </span>
                 </template>
               </v-card>
-              <AddFavoriteButton :path="path" />
+              <AddFavoriteButton :path="path"/>
             </div>
           </div>
         </v-card-text>
@@ -220,14 +224,18 @@ export default {
     ...mapActions([SEARCH_PATH, FETCH_STATIONS]),
     async onSearchResult() {
       try {
-      } catch (e) {
+        this.searchPath(this.path);
+      }
+      catch (e) {
         this.showSnackbar(SNACKBAR_MESSAGES.COMMON.FAIL)
         console.error(e)
       }
     },
     initDepartureTimeView() {
-      this.departureTimeSelectView.hour = Array.from(Array(24)).map((_, i) => this.getTimeSelectView(i))
-      this.departureTimeSelectView.minute = Array.from(Array(60)).map((_, i) => this.getTimeSelectView(i))
+      this.departureTimeSelectView.hour = Array.from(Array(24))
+      .map((_, i) => this.getTimeSelectView(i))
+      this.departureTimeSelectView.minute = Array.from(Array(60))
+      .map((_, i) => this.getTimeSelectView(i))
       const today = new Date()
       const hour = today.getHours()
       const dayTime = hour > 12 ? 'pm' : 'am'
@@ -245,7 +253,8 @@ export default {
         await this.onSearchResult()
         this.closeDialog()
         this.showSnackbar(SNACKBAR_MESSAGES.PATH.ARRIVAL_TIME.SUCCESS)
-      } catch (e) {
+      }
+      catch (e) {
         this.showSnackbar(SNACKBAR_MESSAGES.PATH.ARRIVAL_TIME.FAIL)
       }
     },
@@ -261,7 +270,8 @@ export default {
             value: station.id
           }
         })
-      } catch (e) {
+      }
+      catch (e) {
         this.showSnackbar(SNACKBAR_MESSAGES.COMMON.FAIL)
       }
     },
