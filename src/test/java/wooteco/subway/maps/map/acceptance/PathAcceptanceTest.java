@@ -31,6 +31,10 @@ public class PathAcceptanceTest extends AcceptanceTest {
      * *3호선*                   *신분당선*
      * |                        |
      * 남부터미널역  --- *3호선* ---   양재
+     *
+     * 2호선 추가 요금 - 400원
+     * 3호선 추가 요금 - 800원
+     * 신분당선 추가 요금 - 0원
      */
     @BeforeEach
     public void setUp() {
@@ -66,6 +70,7 @@ public class PathAcceptanceTest extends AcceptanceTest {
         //then
         적절한_경로를_응답(response, Lists.newArrayList(교대역, 남부터미널역, 양재역));
         총_거리와_소요_시간을_함께_응답함(response, 3, 4);
+        요금_계산_기준에_맞는_요금을_응답(response, 2_050);
     }
 
 
@@ -77,6 +82,7 @@ public class PathAcceptanceTest extends AcceptanceTest {
         //then
         적절한_경로를_응답(response, Lists.newArrayList(교대역, 강남역, 양재역));
         총_거리와_소요_시간을_함께_응답함(response, 4, 3);
+        요금_계산_기준에_맞는_요금을_응답(response, 1_650);
     }
 
     private Long 지하철_노선_등록되어_있음(String name, String color) {
