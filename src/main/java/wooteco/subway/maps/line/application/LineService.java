@@ -37,7 +37,7 @@ public class LineService {
     }
 
     public List<Line> findLinesByIds(List<Long> ids) {
-        return lineRepository.findAllByIdIn(ids);
+        return lineRepository.findAllById(ids);
     }
 
     public Line findLineById(Long id) {
