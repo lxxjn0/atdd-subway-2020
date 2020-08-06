@@ -1,10 +1,16 @@
 package wooteco.subway.maps.line.ui;
 
-import wooteco.subway.maps.line.application.LineStationService;
-import wooteco.subway.maps.line.dto.LineStationCreateRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import wooteco.subway.maps.line.application.LineStationService;
+import wooteco.subway.maps.line.dto.LineStationCreateRequest;
 
 @RestController
 @RequestMapping("/lines")
@@ -16,13 +22,15 @@ public class LineStationController {
     }
 
     @PostMapping("/{lineId}/stations")
-    public ResponseEntity createLineStation(@PathVariable Long lineId, @RequestBody LineStationCreateRequest edgeCreateRequest) {
+    public ResponseEntity createLineStation(@PathVariable Long lineId,
+            @RequestBody LineStationCreateRequest edgeCreateRequest) {
         lineStationService.addLineStation(lineId, edgeCreateRequest);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{lineId}/stations/{stationId}")
-    public ResponseEntity deleteLineStation(@PathVariable Long lineId, @PathVariable Long stationId) {
+    public ResponseEntity deleteLineStation(@PathVariable Long lineId,
+            @PathVariable Long stationId) {
         lineStationService.removeLineStation(lineId, stationId);
         return ResponseEntity.noContent().build();
     }
